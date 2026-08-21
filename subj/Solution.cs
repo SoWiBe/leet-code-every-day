@@ -1,67 +1,86 @@
+namespace LeetApp.subj;
 
 public class Solution {
-    public IList<int> FindAnagrams(string s, string p) 
+    
+    // /// <summary>
+    // /// First solution, but is not covered all cases, need to be optimized
+    // /// </summary>
+    // /// <param name="s"></param>
+    // /// <param name="p"></param>
+    // /// <returns></returns>
+    // public static IList<int> FindAnagrams(string s, string p) 
+    // {
+    //     Dictionary<char, int> lessChars = [];
+    //     List<int> indexes = [];
+    //
+    //     if (s.Length >= p.Length)
+    //         FillDict(p, lessChars);
+    //     else
+    //         return [];
+    //
+    //     var left = 0;
+    //     var right = p.Length - 1;
+    //     
+    //     while (right != s.Length)
+    //     {
+    //         var checkingChars = new Dictionary<char, int>(lessChars);
+    //         for (var i = left; i <= right; i++)
+    //         {
+    //             if (checkingChars.TryGetValue(s[i], out var value)){
+    //                 if (value > 0)
+    //                 {
+    //                     checkingChars[s[i]]--;
+    //                     if (i == right)
+    //                     {
+    //                         indexes.Add(left);
+    //                     }
+    //                 }
+    //                 else break;
+    //             }
+    //             else break;
+    //         }
+    //
+    //         left++;
+    //         right++;
+    //     }
+    //
+    //     return indexes;
+    // }
+
+    /// <summary>
+    /// Wanna be time complexity O(N + X), and space complexity O(1)
+    /// </summary>
+    /// <param name="s"></param>
+    /// <param name="p"></param>
+    /// <returns></returns>
+    public static IList<int> FinaAnagramsByArray(string s, string p)
     {
-        Dictionary<char, int> lessChars = [];
+        if (p.Length > s.Length) return [];
         List<int> indexes = [];
 
-        var lessSize = 0;
-        var biggerSize = 0;
-        var workingStr = string.Empty;
-
-        if (s.Length >= p.Length)
-        {
-            FillDict(p, lessChars);
-            lessSize = p.Length;
-            biggerSize = s.Length;
-            workingStr = s;
-        } 
-        else
-        {
-            return [];
-        }
-
-        var left = 0;
-        var right = lessSize - 1;
+        Span<int> pFreq = stackalloc int[26];
+        FillFreq(p, pFreq);
         
-        while (right != biggerSize)
+        Span<int> windowFreq = stackalloc int[26];
+        
+        for (var i = 0; i < s.Length; i++)
         {
-            var checkingChars = new Dictionary<char, int>(lessChars);
-            for (var i = left; i <= right; i++)
-            {
-                if (checkingChars.TryGetValue(workingStr[i], out var value)){
-                    if (value > 0)
-                    {
-                        checkingChars[workingStr[i]]--;
-                        if (i == right)
-                        {
-                            indexes.Add(left);
-                        }
-                    }
-                    else break;
-                }
-                else break;
-            }
-
-            left++;
-            right++;
+            if (i >= p.Length) windowFreq[s[i - p.Length] - 'a']--;
+            windowFreq[s[i] - 'a']++;
+            
+            if (windowFreq.SequenceEqual(pFreq)) indexes.Add(i - p.Length + 1);
         }
-
+        
         return indexes;
     }
 
-    private static void FillDict(string str, Dictionary<char, int> dict)
+    private static void FillFreq(ReadOnlySpan<char> str, Span<int> freq)
     {
-        for (var i = 0; i < str.Length; i++)
-        {
-            if (dict.TryGetValue(str[i], out var value))
-            {
-                dict[str[i]]++;
-            }
-            else
-            {
-                dict[str[i]] = 1;
-            }
-        }
+        foreach (var t in str) freq[t - 'a']++; // для каждого символа из алфавита заполняем его кол-во относительно подмассива
+    }
+
+    private static void ClearFreq(Span<int> freq)
+    {
+        freq.Clear();
     }
 }

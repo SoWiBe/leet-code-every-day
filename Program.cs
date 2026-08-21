@@ -1,5 +1,7 @@
-﻿Solution solution = new();
+﻿using LeetApp.subj;
 
-var indexes = solution.FindAnagrams("baa", "aa");
+Solution solution = new();
+
+var indexes = Solution.FinaAnagramsByArray("aabbaa", "aa");
 
 foreach(var index in indexes) Console.WriteLine(index);
