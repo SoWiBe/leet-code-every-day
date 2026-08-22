@@ -1,7 +1,4 @@
-﻿using LeetApp.subj;
+﻿using LeetApp.subj.August.Session22;
 
-Solution solution = new();
-
-var indexes = Solution.FinaAnagramsByArray("aabbaa", "aa");
-
-foreach(var index in indexes) Console.WriteLine(index);
+Session22 session = new Session22();
+Console.WriteLine(session.CheckInclusion("acb", "eidbaooo"));
