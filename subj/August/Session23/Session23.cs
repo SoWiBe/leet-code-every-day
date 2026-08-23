@@ -21,4 +21,24 @@ public class Session23
         
         return max;
     }
+    
+    public int MaxArea(int[] height)
+    {
+        var left = 0;
+        var right = height.Length - 1;
+        var max = 0;
+
+        while(left < right)
+        {
+            var s = (right - left) * (Math.Min(height[left], height[right]));
+            max = Math.Max(max, s);
+
+            if (height[left] < height[right])
+                left++;
+            else
+                right--;
+        }
+
+        return max;
+    }
 }
