@@ -1,19 +1,22 @@
 ﻿using LeetApp.subj.August.Session22;
 using LeetApp.subj.August.Session23;
+using LeetApp.subj.September;
 
 // Session22 session = new Session22();
 // Console.WriteLine(session.CheckInclusion("acb", "eidbaooo"));
 
 Session23 session23 = new Session23();
 
+
+Console.WriteLine(Session409.FirstStableIndex([0], 0));
 // Console.WriteLine(session23.MaxArea([1,8,6,2,5,4,8,3,7]));
-foreach (var t in session23.ThreeSum([-1,0,1,2,-1,-4]))
-{
-    foreach (var i in t)
-    {
-        Console.WriteLine(i);
-    }
-}
+// foreach (var t in session23.ThreeSum([-1,0,1,2,-1,-4]))
+// {
+//     foreach (var i in t)
+//     {
+//         Console.WriteLine(i);
+//     }
+// }
 // foreach (var t in session23.TwoSum([2, 7, 11, 15], 9))
 // {
 //     Console.WriteLine(t);
